@@ -99,10 +99,7 @@ async function run() {
       const result=await gallery.find({}).toArray()
       res.json(result)
     })
-    app.get("/tour-team",async(req,res)=>{
-      const result=await tourTeam.find({}).toArray()
-      res.json(result)
-    })
+    // 
     app.get("/inventories/:id",async(req,res)=>{
       const id=req.params.id
       const query={_id:ObjectId(id)}
@@ -127,15 +124,14 @@ const option={upsert:true}
 const updateDocs={
 $set:{
   title:item.title,
-  location:item.location,
+  
   price:item.price,
-  groupSize:item.groupSize,
-  duration:item.duration,
+  
+  supplier:item.supplier,
 photo:item.photo,
-tourType:item.tourType,
+description:item.description,
 introduction:item.introduction,
-departureTime:item.departureTime,
-returnTime:item.returnTime,
+
 }
 }
 const result=await inventories.updateOne(filter,updateDocs,option)
