@@ -25,9 +25,9 @@ async function run() {
       await client.connect();
       const database = client.db("sareealoy");
       const inventories = database.collection("inventories");
-      // const banner = database.collection("banner");
+      
       const gallery = database.collection("gallery");
-      // const tourTeam = database.collection("tour-team");
+     
       const delivers = database.collection("deliver");
       
     app.get("/inventories",async(req,res)=>{
