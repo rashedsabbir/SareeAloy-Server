@@ -23,7 +23,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
       await client.connect();
-      const database = client.db("Tour-Express");
+      const database = client.db("sareealoy");
       const inventories = database.collection("inventories");
       // const banner = database.collection("banner");
       const gallery = database.collection("gallery");
