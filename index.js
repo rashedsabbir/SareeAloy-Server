@@ -69,12 +69,49 @@ async function run() {
       res.json(result)
     })
 
+    app.delete("/offers/:id",async(req,res)=>{
+      const id=req.params.id
+    const item={_id:ObjectId(id)}
+  const result=await offers.deleteOne(item)
+  res.json(result) 
+  })
+
     app.post("/booking",async(req,res)=>{
       const item=req.body
       const booking=await bookings.insertOne(item)
       res.json(booking)
     })
 
+    app.get("/booking/:id",async(req,res)=>{
+      const id=req.params.id
+      const query={_id:ObjectId(id)}
+      const booking=await bookings.findOne(query)
+      res.json(booking)
+    })
+    app.get("/booking",async(req,res)=>{
+      let query={}
+      const email=req.query.email
+     if(email){
+     query={email:email}
+     }
+     const cursor= bookings.find(query)
+     const booking=await cursor.toArray()
+     console.log(booking)
+     res.json(booking)
+    })
+    app.delete("/booking/:id",async(req,res)=>{
+      const id=req.params.id
+    const item={_id:ObjectId(id)}
+  const booking=await bookings.deleteOne(item)
+  res.json(booking) 
+  })
+
+  app.get("/myorder/:email",async(req,res)=>{
+    const email=req.params.email
+  const query={email:email}
+const booking=await bookings.find(query).toArray()
+res.json(booking) 
+})
 
    
     } finally {
