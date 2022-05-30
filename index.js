@@ -25,16 +25,51 @@ async function run() {
       await client.connect();
       const database = client.db("sareealoy");
       
-      
+      const offers = database.collection("offers");
       const gallery = database.collection("gallery");
      
       
-      
-    
     app.get("/gallery",async(req,res)=>{
       const result=await gallery.find({}).toArray()
       res.json(result)
     })
+
+    
+
+    app.get("/offers",async(req,res)=>{
+      const count=await offers.find({}).count()
+      const page=req.query.page
+      const size=parseInt(req.query.size)
+      let offer;
+      if(page){
+         offer=await offers.find({}).skip(page*size).limit(size).toArray()
+
+      }
+      else(
+       offer=await offers.find({}).toArray()
+
+      )
+      // console.log(products.length)
+      res.json({
+        count,
+        offer
+      })
+    })
+
+    app.get("/offers/:id",async(req,res)=>{
+      const id=req.params.id
+      const query={_id:ObjectId(id)}
+      const result=await offers.findOne(query)
+      res.json(result)
+    })
+
+    app.post("/offers",async(req,res)=>{
+      const item=req.body
+      const result=await offers.insertOne(item)
+      res.json(result)
+    })
+
+
    
     } finally {
     //   await client.close();
