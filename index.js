@@ -69,6 +69,31 @@ async function run() {
       res.json(result)
     })
 
+
+    app.put("/offers/update/:id",async(req,res)=>{
+      const id=req.params.id
+      const filter={_id:ObjectId(id)}
+      const item=req.body
+      const option={upsert:true}
+      const updateDocs={
+      $set:{
+        title:item.title,
+       
+        price:item.price,
+        groupSize:item.groupSize,
+        duration:item.duration,
+      photo:item.photo,
+      
+      introduction:item.introduction,
+      
+      }
+      }
+      const result=await offers.updateOne(filter,updateDocs,option)
+      res.json(result)
+          })
+
+          
+
     app.delete("/offers/:id",async(req,res)=>{
       const id=req.params.id
     const item={_id:ObjectId(id)}
@@ -99,6 +124,22 @@ async function run() {
      console.log(booking)
      res.json(booking)
     })
+
+    app.put("/booking/:id",async(req,res)=>{
+      const id=req.params.id
+      const filter={_id:ObjectId(id)}
+      const item=req.body
+      const option={upsert:true}
+      const updateDocs={
+      $set:{
+       status:item.status
+      }
+      }
+      const booking=await bookings.updateOne(filter,updateDocs,option)
+      res.json(booking)
+          })
+
+
     app.delete("/booking/:id",async(req,res)=>{
       const id=req.params.id
     const item={_id:ObjectId(id)}
