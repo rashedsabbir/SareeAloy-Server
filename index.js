@@ -27,7 +27,7 @@ async function run() {
       
       const offers = database.collection("offers");
       const gallery = database.collection("gallery");
-     
+      const bookings = database.collection("booking");
       
     app.get("/gallery",async(req,res)=>{
       const result=await gallery.find({}).toArray()
@@ -67,6 +67,12 @@ async function run() {
       const item=req.body
       const result=await offers.insertOne(item)
       res.json(result)
+    })
+
+    app.post("/booking",async(req,res)=>{
+      const item=req.body
+      const booking=await bookings.insertOne(item)
+      res.json(booking)
     })
 
 
